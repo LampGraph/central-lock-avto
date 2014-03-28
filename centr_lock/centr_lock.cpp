@@ -12,7 +12,7 @@
 #include <avr/interrupt.h>
 #include <util/delay.h>
 
-void blink (uint8_t count);
+void blink (uint8_t count, uint8_t port);
 
 volatile bool openclose = 0, flag=1;
 
@@ -46,22 +46,22 @@ int main(void)
 			flag=1;
 			if (openclose)
 			{
-				blink(1);
+				blink(1,4);
 			} else
 			{
-				blink(2);
+				blink(1,3);
 			}
 		}
     }
 }
 
-void blink (uint8_t count)
+void blink (uint8_t count, uint8_t port)
 {
 	for (int i = 0; i < count; i++)
 	{
-		PORTB |= (1<<4);
+		PORTB |= (1<<port);
 		_delay_ms(LOCK_DELAY);
-		PORTB &= ~(1<<4);
+		PORTB &= ~(1<<port);
 		_delay_ms(LOCK_DELAY);
 	}	
 }
