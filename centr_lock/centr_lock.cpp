@@ -7,6 +7,9 @@
 #define F_CPU 9600000
 #define LED_PIN PB4
 #define LOCK_DELAY 250
+#define OPEN_BUTTON_PIN PB1
+#define CLOSE_BUTTON_PIN PB2
+
 
 #include <avr/io.h>
 #include <avr/interrupt.h>
@@ -34,13 +37,13 @@ ISR(PCINT0_vect)
 int main(void)
 {
 	DDRB = 0x00;
-	DDRB |= (1<<LED_PIN);	
+	DDRB |= (1<<PB4); //Настраиваем пин на выход	
+	DDRB |= (1<<PB3); //Настраиваем пин на выход
 	SREG |= (1<<7); // Global Interrupt Enable
 	GIMSK |= (1<<PCIE); //External Interrupt Request 0 Enable
 	PCMSK |= (1<<PCINT0)|(1<<PCINT1);
     while(1)
     {
-		//TODO:: Please write your application code 
 		if (!flag)
 		{	
 			flag=1;
@@ -49,6 +52,7 @@ int main(void)
 				blink(1,4);
 			} else
 			{
+//				PORTB |= (1<<3);
 				blink(1,3);
 			}
 		}
